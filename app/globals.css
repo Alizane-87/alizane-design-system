@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: #0a0d10;
+  --color-paper: #111827;
+  --color-surface: #161b22;
+  --color-ink: #f4f2ef;
+  --color-emerald-brand: #065f46;
+  --color-emerald-deep: #064e3b;
+  --color-emerald-hover: #047857;
+  --color-emerald-pulse: #34d399;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: #0a0d10;
+    color: #f4f2ef;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    text-wrap: pretty;
+  }
+}
