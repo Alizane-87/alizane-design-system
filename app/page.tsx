@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 
 // 20 Heros
 import {
@@ -102,17 +103,26 @@ import { FontSpecimenMatrix } from "@/components/fonts";
 
 type StudioTab = "heros" | "backgrounds" | "storytelling" | "scroll" | "fonts";
 
-export default function StandaloneStudioPage() {
+export default function MasterDesignStudioPage() {
   const [activeTab, setActiveTab] = useState<StudioTab>("heros");
 
   return (
     <div className="bg-[#0A0D10] text-[#F4F2EF] font-sans antialiased selection:bg-[#34D399] selection:text-[#065F46] min-h-screen">
       {/* Top Floating Studio Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 bg-[#0A0D10]/95 px-6 py-3.5 backdrop-blur-md">
+      <header className="fixed top-0 left-0 right-0 z-50 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 bg-[#0A0D10]/95 px-6 py-3 backdrop-blur-md">
         <div className="flex items-center gap-3">
-          <div className="h-3 w-3 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-serif text-base font-semibold tracking-tight text-white">
-            Alizane Design System &amp; Studio
+          <a
+            href="https://alizanelabs.site"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 font-mono text-xs text-gray-400 hover:text-white transition-colors"
+          >
+            <span>←</span>
+            <span>alizanelabs.site</span>
+          </a>
+          <span className="text-white/20">|</span>
+          <span className="font-serif text-sm font-semibold tracking-tight text-white">
+            Alizane Master Studio
           </span>
           <span className="rounded bg-emerald-950/80 border border-emerald-500/30 px-2 py-0.5 font-mono text-[10px] text-emerald-300">
             v1.0.0
@@ -176,13 +186,15 @@ export default function StandaloneStudioPage() {
 
       {/* Main Studio Viewport */}
       <div className="pt-20">
-        {/* TAB 1: HEROS */}
+        {/* =========================================================================
+            TAB 1: HEROS SUITE (20 TOTAL)
+            ========================================================================= */}
         {activeTab === "heros" && (
           <div className="space-y-16">
             <div className="border-b border-white/10 py-10 px-6 sm:px-16 text-center bg-[#07090C]">
               <h1 className="font-serif text-3xl sm:text-5xl text-white">20 Master Hero Architectures</h1>
               <p className="mt-2 text-sm text-gray-400 font-mono">
-                Documented in docs/HEROS_DATABASE.md
+                Full technical recipes documented in docs/HEROS_DATABASE.md
               </p>
             </div>
 
@@ -209,13 +221,15 @@ export default function StandaloneStudioPage() {
           </div>
         )}
 
-        {/* TAB 2: BACKGROUNDS */}
+        {/* =========================================================================
+            TAB 2: BACKGROUNDS & CANVASES SUITE (20 TOTAL)
+            ========================================================================= */}
         {activeTab === "backgrounds" && (
           <div className="space-y-12 py-10 px-6 sm:px-16 max-w-6xl mx-auto">
             <div className="text-center pb-6 border-b border-white/10">
               <h1 className="font-serif text-3xl sm:text-5xl text-white">20 Ambient Backgrounds &amp; Canvases</h1>
               <p className="mt-2 text-sm text-gray-400 font-mono">
-                Documented in docs/BACKGROUNDS_DATABASE.md
+                Full tactile environments documented in docs/BACKGROUNDS_DATABASE.md
               </p>
             </div>
 
@@ -383,13 +397,15 @@ export default function StandaloneStudioPage() {
           </div>
         )}
 
-        {/* TAB 3: STORYTELLING */}
+        {/* =========================================================================
+            TAB 3: STORYTELLING SUITE (18 TOTAL)
+            ========================================================================= */}
         {activeTab === "storytelling" && (
           <div className="space-y-16">
             <div className="border-b border-white/10 py-10 px-6 sm:px-16 text-center bg-[#07090C]">
               <h1 className="font-serif text-3xl sm:text-5xl text-white">18 Narrative Progression Devices</h1>
               <p className="mt-2 text-sm text-gray-400 font-mono">
-                Documented in docs/STORYTELLING_DATABASE.md
+                Full conversion storylines documented in docs/STORYTELLING_DATABASE.md
               </p>
             </div>
 
@@ -414,13 +430,15 @@ export default function StandaloneStudioPage() {
           </div>
         )}
 
-        {/* TAB 4: SCROLL EFFECTS */}
+        {/* =========================================================================
+            TAB 4: SCROLL EFFECTS SUITE (21 TOTAL)
+            ========================================================================= */}
         {activeTab === "scroll" && (
           <div className="space-y-16">
             <div className="border-b border-white/10 py-10 px-6 sm:px-16 text-center bg-[#07090C]">
               <h1 className="font-serif text-3xl sm:text-5xl text-white">21 Modular ScrollCraft Motion Devices</h1>
               <p className="mt-2 text-sm text-gray-400 font-mono">
-                Documented in docs/SCROLL_EFFECTS_DATABASE.md
+                Full physics formulas documented in docs/SCROLL_EFFECTS_DATABASE.md
               </p>
             </div>
 
@@ -448,7 +466,9 @@ export default function StandaloneStudioPage() {
           </div>
         )}
 
-        {/* TAB 5: FONTS */}
+        {/* =========================================================================
+            TAB 5: PREMIUM FONTS MATRIX (40 TOTAL)
+            ========================================================================= */}
         {activeTab === "fonts" && (
           <div>
             <FontSpecimenMatrix />

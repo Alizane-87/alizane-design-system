@@ -1,14 +1,39 @@
 @import "tailwindcss";
 
 @theme {
+  /* Minimalist-UI Warm Editorial Canvas — Palette 2: Sovereign Emerald */
   --color-canvas: #0a0d10;
   --color-paper: #111827;
   --color-surface: #161b22;
   --color-ink: #f4f2ef;
+  --color-graphite: #57534e;
+  --color-graphite-light: #78716c;
+  --color-border: #262b32;
+  --color-border-strong: #3b424e;
+
+  /* Sovereign Emerald Accents */
   --color-emerald-brand: #065f46;
   --color-emerald-deep: #064e3b;
   --color-emerald-hover: #047857;
-  --color-emerald-pulse: #34d399;
+  --color-sage-tint: #ecfdf5;
+  --color-sage-border: #a7f3d0;
+  --color-amber-spark: #d97706;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-serif), Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Fluid editorial type scale */
+  --text-display: clamp(2.5rem, 1.5rem + 4.2vw, 5rem);
+  --text-display--line-height: 1.05;
+  --text-headline: clamp(1.85rem, 1.3rem + 2.4vw, 3.25rem);
+  --text-headline--line-height: 1.1;
+  --text-title: clamp(1.35rem, 1.15rem + 1vw, 2rem);
+  --text-title--line-height: 1.2;
+  --text-subtitle: clamp(1.05rem, 1rem + 0.3vw, 1.25rem);
+  --text-subtitle--line-height: 1.4;
+  --text-lead: clamp(1.05rem, 0.98rem + 0.3vw, 1.2rem);
+  --text-lead--line-height: 1.65;
 }
 
 @layer base {
@@ -20,7 +45,58 @@
   body {
     background-color: #0a0d10;
     color: #f4f2ef;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
     text-wrap: pretty;
+    font-synthesis-weight: none;
   }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background-color: #34d399;
+    color: #064e3b;
+  }
+}
+
+@utility display-face {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+/* Subtle Architectural Dot Grid Pattern */
+@utility bg-dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Card Glow Spotlight */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    450px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+    rgba(6, 95, 70, 0.1),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
 }
