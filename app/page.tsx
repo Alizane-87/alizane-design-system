@@ -111,21 +111,12 @@ export default function MasterDesignStudioPage() {
       {/* Top Floating Studio Header */}
       <header className="fixed top-0 left-0 right-0 z-50 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 bg-[#0A0D10]/95 px-6 py-3 backdrop-blur-md">
         <div className="flex items-center gap-3">
-          <a
-            href="https://alizanelabs.site"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 font-mono text-xs text-gray-400 hover:text-white transition-colors"
-          >
-            <span>←</span>
-            <span>alizanelabs.site</span>
-          </a>
-          <span className="text-white/20">|</span>
-          <span className="font-serif text-sm font-semibold tracking-tight text-white">
-            Alizane Master Studio
+          <div className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+          <span className="font-serif text-base font-semibold tracking-tight text-white">
+            Alizane Design Studio
           </span>
           <span className="rounded bg-emerald-950/80 border border-emerald-500/30 px-2 py-0.5 font-mono text-[10px] text-emerald-300">
-            v1.0.0
+            v1.0.0 · Master Registry
           </span>
         </div>
 
