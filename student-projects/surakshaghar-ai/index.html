@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<title>SurakshaGhar AI</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martel:wght@700;800&family=Hind:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a field-survey tool. Inputs on the left, a sticky safety report on the right; reference sections below. */
+:root {
+  --paper: #f3f6f4;
+  --surface: #ffffff;
+  --ink: #14231f;
+  --muted: #55635e;
+  --line: #d4ddd8;
+  --deep: #1f4d45;
+  --deep-ink: #ffffff;
+  --accent: #b86f00;
+  --accent-soft: #f7e8c9;
+  --r-low: #2e7d4f;
+  --r-mod: #a87b00;
+  --r-high: #cf5f17;
+  --r-vhigh: #b3261e;
+  --pill-ink: #ffffff;
+  --font-display: "Martel", Georgia, "Noto Serif Devanagari", serif;
+  --font-body: "Hind", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f1715; --surface: #16211e; --ink: #e5ece9; --muted: #9baba4; --line: #2b3934;
+    --deep: #6cc0ad; --deep-ink: #0b1311; --accent: #f0b43c; --accent-soft: #3a2e14;
+    --r-low: #5cc48a; --r-mod: #e3bf4a; --r-high: #f08a4b; --r-vhigh: #f26b61; --pill-ink: #0b1311;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f1715; --surface: #16211e; --ink: #e5ece9; --muted: #9baba4; --line: #2b3934;
+  --deep: #6cc0ad; --deep-ink: #0b1311; --accent: #f0b43c; --accent-soft: #3a2e14;
+  --r-low: #5cc48a; --r-mod: #e3bf4a; --r-high: #f08a4b; --r-vhigh: #f26b61; --pill-ink: #0b1311;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.55;
+}
+.wrap {
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.9rem, 4.2vw, 2.9rem); font-weight: 800; }
+h2 { font-size: clamp(1.4rem, 2.6vw, 1.9rem); font-weight: 800; }
+h3 { font-size: 1.1rem; font-weight: 700; }
+p { margin: 0; }
+a { color: var(--deep); }
+.eyebrow { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.muted { color: var(--muted); }
+.mono { font-family: var(--font-mono); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* header */
+.top { border-bottom: 1px solid var(--line); background: var(--surface); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--ink); text-decoration: none; }
+.brand svg { flex: none; }
+.top nav { display: flex; gap: 18px; flex-wrap: wrap; font-size: 0.95rem; }
+.top nav a { color: var(--muted); text-decoration: none; }
+.top nav a:hover { color: var(--ink); }
+
+/* hero */
+.hero .wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; padding-block: 44px 28px; }
+.hero-text { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.hero-text p { max-width: 58ch; font-size: 1.08rem; color: var(--muted); }
+.hero-fig { min-width: 0; }
+.hero-fig svg { width: 100%; height: auto; display: block; }
+.facts { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 6px; }
+.fact { display: flex; flex-direction: column; }
+.fact b { font-family: var(--font-display); font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+.fact span { font-size: 0.85rem; color: var(--muted); max-width: 18ch; line-height: 1.3; }
+
+/* tool */
+.tool .wrap { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 28px; align-items: start; padding-block: 12px 48px; }
+.steps { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.panel-head { display: flex; align-items: baseline; gap: 12px; }
+.step-no { font-family: var(--font-mono); font-size: 0.8rem; color: var(--deep); border: 1px solid var(--deep); border-radius: 999px; padding: 1px 9px; flex: none; }
+.example-note { background: var(--accent-soft); border-radius: 8px; padding: 10px 14px; font-size: 0.92rem; }
+label.field { display: flex; flex-direction: column; gap: 6px; font-weight: 500; }
+select, input[type="url"], input[type="text"] {
+  font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line);
+  border-radius: 8px; padding: 10px 12px; width: 100%;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 0.88rem; background: var(--paper); }
+.dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.lv-1 { background: var(--r-low); } .lv-2 { background: var(--r-mod); } .lv-3 { background: var(--r-high); } .lv-4 { background: var(--r-vhigh); }
+
+.types { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.type-card { position: relative; }
+.type-card input { position: absolute; opacity: 0; pointer-events: none; }
+.type-card label { display: flex; flex-direction: column; gap: 2px; border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; cursor: pointer; height: 100%; background: var(--paper); }
+.type-card label b { font-weight: 600; }
+.type-card label span { font-size: 0.86rem; color: var(--muted); line-height: 1.35; }
+.type-card input:checked + label { border-color: var(--deep); box-shadow: inset 0 0 0 1px var(--deep); background: var(--surface); }
+.type-card input:focus-visible + label { outline: 3px solid var(--accent); outline-offset: 2px; }
+.ai-tag { font-family: var(--font-mono); font-size: 0.7rem; color: var(--deep); }
+
+.ai-box { border: 1px dashed var(--line); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.tabs { display: flex; gap: 6px; }
+.tabs button { font: inherit; font-size: 0.88rem; border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--deep); color: var(--deep-ink); border-color: var(--deep); }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.row > input { flex: 1 1 220px; min-width: 0; }
+.btn { font: inherit; font-weight: 600; border: 0; border-radius: 8px; padding: 10px 16px; cursor: pointer; background: var(--deep); color: var(--deep-ink); }
+.btn.ghost { background: transparent; color: var(--deep); border: 1px solid var(--deep); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.file-btn { display: inline-flex; align-items: center; gap: 8px; }
+.file-btn input { font: inherit; font-size: 0.9rem; max-width: 100%; }
+.status { font-size: 0.9rem; color: var(--muted); }
+.status.ok { color: var(--r-low); } .status.err { color: var(--r-vhigh); }
+.photo-row { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 14px; align-items: start; }
+.photo-row img { width: 140px; height: 105px; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); background: var(--paper); }
+.pred { display: grid; grid-template-columns: minmax(0, 1fr) 3.5em; gap: 4px 10px; font-size: 0.88rem; align-items: center; }
+.pred .bar { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; margin-bottom: 4px; }
+.pred .bar i { display: block; height: 100%; background: var(--deep); }
+.pred .pct { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--font-mono); }
+
+.q { display: flex; flex-direction: column; gap: 6px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.q legend { font-weight: 500; padding: 0; margin-bottom: 6px; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label { border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; font-size: 0.92rem; cursor: pointer; background: var(--paper); }
+.seg input:checked + label { background: var(--deep); color: var(--deep-ink); border-color: var(--deep); }
+.seg input:focus-visible + label { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* report */
+.report { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.report-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+.headline { font-size: 1.02rem; }
+.risks { display: flex; flex-direction: column; gap: 12px; }
+.risk { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: baseline; }
+.risk-name { font-weight: 600; }
+.risk-name small { font-weight: 400; color: var(--muted); font-size: 0.82rem; margin-left: 6px; }
+.risk-score { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.9rem; }
+.pill { display: inline-block; font-family: var(--font-body); font-size: 0.75rem; font-weight: 600; border-radius: 999px; padding: 1px 9px; margin-left: 8px; color: var(--pill-ink); }
+.pill.lv-2 { color: #1b1400; }
+.meter { grid-column: 1 / -1; height: 10px; border-radius: 5px; background: var(--paper); border: 1px solid var(--line); overflow: hidden; }
+.meter i { display: block; height: 100%; transition: width 0.35s ease; }
+.fixes { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.fix { border-left: 3px solid var(--line); padding: 2px 0 2px 12px; display: flex; flex-direction: column; gap: 2px; }
+.fix-top { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.fix-top b { font-weight: 600; }
+.tag { font-family: var(--font-mono); font-size: 0.72rem; border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; color: var(--muted); white-space: nowrap; }
+.tag.cost { color: var(--accent); border-color: var(--accent); }
+.fix p { font-size: 0.92rem; color: var(--muted); }
+.disclaimer { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+.report-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+/* reference sections */
+section.ref .wrap { padding-block: 44px; display: flex; flex-direction: column; gap: 22px; }
+section.ref + section.ref .wrap { border-top: 1px solid var(--line); }
+.lead { max-width: 64ch; color: var(--muted); font-size: 1.04rem; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.card .where { font-size: 0.85rem; color: var(--muted); }
+.card p { font-size: 0.95rem; }
+.how { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.formula { font-family: var(--font-mono); font-size: 0.9rem; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; overflow-x: auto; white-space: nowrap; }
+.limits { background: var(--accent-soft); border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; max-width: 80ch; }
+footer { border-top: 1px solid var(--line); background: var(--surface); }
+footer .wrap { padding-block: 26px; display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem; color: var(--muted); }
+
+@media (max-width: 920px) {
+  .hero .wrap, .tool .wrap { grid-template-columns: minmax(0, 1fr); }
+  .report { position: static; }
+  .cards, .how { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .types, .cards, .how { grid-template-columns: minmax(0, 1fr); }
+  .photo-row { grid-template-columns: minmax(0, 1fr); }
+  .hero .wrap { padding-block: 28px 16px; gap: 24px; }
+  .panel, .report { padding: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .meter i { transition: none; } }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#check">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M4 14 15 5l11 9" fill="none" stroke="var(--deep)" stroke-width="2.4" stroke-linejoin="round"/><rect x="7.5" y="13" width="15" height="11" fill="none" stroke="var(--ink)" stroke-width="2"/><rect x="7.5" y="16.5" width="15" height="2.4" fill="var(--accent)"/><path d="M4 26.5h22" stroke="var(--ink)" stroke-width="2"/></svg>
+      SurakshaGhar AI
+    </a>
+    <nav aria-label="Sections">
+      <a href="#check">Check a house</a>
+      <a href="#designs">Safer designs</a>
+      <a href="#how">How the AI works</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <span class="eyebrow">Earthquake · Flood · Cyclone · Landslide · Heat</span>
+      <h1>Will your house stand through the next disaster?</h1>
+      <p>Pick your state, show the AI a photo of the house and answer five questions. SurakshaGhar gives a risk score for each hazard and a list of fixes, cheapest first.</p>
+      <div class="facts" aria-label="India hazard facts, approximate">
+        <div class="fact"><b>59%</b><span>of India's land is prone to moderate or severe earthquakes</span></div>
+        <div class="fact"><b>12%</b><span>of the land floods, about 40 million hectares</span></div>
+        <div class="fact"><b>5,700 km</b><span>of coastline faces cyclones</span></div>
+      </div>
+    </div>
+    <figure class="hero-fig" style="margin:0">
+      <svg viewBox="0 0 480 270" role="img" aria-label="Diagram of a safer house: hip roof, roof band, lintel band, corner steel bars, plinth band and a floor above the flood line">
+        <defs>
+          <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="var(--line)" stroke-width="2"/></pattern>
+        </defs>
+        <rect x="0" y="236" width="300" height="34" fill="url(#hatch)"/>
+        <line x1="0" y1="236" x2="300" y2="236" stroke="var(--ink)" stroke-width="1.5"/>
+        <line x1="0" y1="224" x2="290" y2="224" stroke="var(--deep)" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <polygon points="20,112 140,50 260,112" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round"/>
+        <line x1="140" y1="50" x2="140" y2="112" stroke="var(--line)" stroke-width="1"/>
+        <rect x="30" y="112" width="220" height="8" fill="var(--accent)"/>
+        <rect x="34" y="120" width="212" height="88" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.5"/>
+        <rect x="34" y="146" width="212" height="7" fill="var(--accent)"/>
+        <rect x="62" y="156" width="30" height="24" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+        <rect x="188" y="156" width="30" height="24" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+        <rect x="122" y="153" width="36" height="55" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2"/>
+        <line x1="40" y1="120" x2="40" y2="208" stroke="var(--deep)" stroke-width="2.4" stroke-dasharray="5 3"/>
+        <line x1="240" y1="120" x2="240" y2="208" stroke="var(--deep)" stroke-width="2.4" stroke-dasharray="5 3"/>
+        <rect x="26" y="208" width="228" height="28" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.5"/>
+        <rect x="26" y="208" width="228" height="6" fill="var(--accent)"/>
+        <g stroke="var(--muted)" stroke-width="1" fill="none">
+          <path d="M206 82H296"/><path d="M252 116H296"/><path d="M248 150H296"/><path d="M242 182H296"/><path d="M256 211H296"/><path d="M290 224L296 238"/>
+        </g>
+        <g font-size="13" fill="var(--ink)" font-family="Hind, system-ui, sans-serif">
+          <text x="302" y="86">Hip roof, 4 slopes</text>
+          <text x="302" y="120">Roof band</text>
+          <text x="302" y="154">Lintel band</text>
+          <text x="302" y="186">Corner steel bars</text>
+          <text x="302" y="215">Plinth band</text>
+          <text x="302" y="243">Floor above flood line (dashed)</text>
+        </g>
+      </svg>
+    </figure>
+  </div>
+</section>
+
+<section class="tool" id="check">
+  <div class="wrap">
+    <div class="steps">
+      <p class="example-note" id="exampleNote"><b>Example loaded:</b> Ramesh's brick house in Assam. Change any answer to check your own house.</p>
+
+      <div class="panel">
+        <div class="panel-head"><span class="step-no">Step 1</span><h2 style="font-size:1.25rem">Where is the house?</h2></div>
+        <label class="field" for="state">State or union territory
+          <select id="state"></select>
+        </label>
+        <div class="chips" id="hazardChips" aria-live="polite"></div>
+        <p class="muted" style="font-size:0.85rem">State-level and approximate. Hazards change from district to district, so check the BMTPC Vulnerability Atlas or your district disaster plan too.</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><span class="step-no">Step 2</span><h2 style="font-size:1.25rem">What kind of house is it?</h2></div>
+
+        <div class="ai-box">
+          <div>
+            <h3>Ask the AI photo model</h3>
+            <p class="muted" style="font-size:0.92rem">Uses the image model we trained in Teachable Machine with four classes: kutcha, masonry, rcc, stilt. The photo stays on this device.</p>
+          </div>
+          <div class="tabs" role="tablist" aria-label="How to load the model">
+            <button type="button" role="tab" id="tabFiles" aria-selected="true" aria-controls="paneFiles">Model files</button>
+            <button type="button" role="tab" id="tabLink" aria-selected="false" aria-controls="paneLink">Model link</button>
+          </div>
+          <div id="paneFiles" role="tabpanel" aria-labelledby="tabFiles" class="row">
+            <label class="file-btn" for="modelFiles"><span class="muted" style="font-size:0.9rem">Pick model.json, metadata.json and weights.bin:</span></label>
+            <input type="file" id="modelFiles" multiple accept=".json,.bin">
+          </div>
+          <div id="paneLink" role="tabpanel" aria-labelledby="tabLink" class="row" hidden>
+            <input type="url" id="modelUrl" placeholder="https://teachablemachine.withgoogle.com/models/XXXX/" aria-label="Teachable Machine model link">
+            <button type="button" class="btn ghost" id="loadUrl">Load model</button>
+          </div>
+          <p class="status" id="modelStatus">No model loaded yet. You can still choose the house type yourself below.</p>
+          <div class="row">
+            <label for="photo" class="muted" style="font-size:0.9rem">House photo:</label>
+            <input type="file" id="photo" accept="image/*" disabled>
+          </div>
+          <div class="photo-row" id="photoRow" hidden>
+            <img id="photoPreview" alt="Uploaded house photo">
+            <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+              <div class="pred" id="preds"></div>
+              <p class="status" id="aiVerdict"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="types" id="types" role="radiogroup" aria-label="House type"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><span class="step-no">Step 3</span><h2 style="font-size:1.25rem">Five quick questions</h2></div>
+        <div id="questions" style="display:flex;flex-direction:column;gap:16px"></div>
+      </div>
+    </div>
+
+    <aside class="report" aria-labelledby="reportTitle">
+      <div class="report-head">
+        <div>
+          <span class="eyebrow">Safety report</span>
+          <h2 id="reportTitle" style="font-size:1.35rem">Risk for this house</h2>
+        </div>
+        <span class="tag" id="reportPlace"></span>
+      </div>
+      <p class="headline" id="headline" aria-live="polite"></p>
+      <div class="risks" id="risks"></div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <h3>What to do first</h3>
+        <ol class="fixes" id="fixes"></ol>
+        <button type="button" class="btn ghost" id="moreFixes" style="align-self:flex-start">Show all fixes</button>
+      </div>
+      <div class="report-actions">
+        <button type="button" class="btn" id="copyReport">Copy report</button>
+        <span class="status" id="copyStatus" aria-live="polite"></span>
+      </div>
+      <p class="disclaimer">This is a first check, not an engineer's certificate. For wide cracks, leaning walls or new construction, ask a qualified civil engineer. In an emergency call 112.</p>
+    </aside>
+  </div>
+</section>
+
+<section class="ref" id="designs">
+  <div class="wrap">
+    <span class="eyebrow">Learning from Indian builders</span>
+    <h2>Designs India already gets right</h2>
+    <p class="lead">Many traditional houses were shaped by the hazards around them. The report points to these when they fit your area.</p>
+    <div class="cards" id="designCards"></div>
+  </div>
+</section>
+
+<section class="ref" id="how">
+  <div class="wrap">
+    <span class="eyebrow">Under the hood</span>
+    <h2>How the AI works</h2>
+    <div class="how">
+      <div class="card">
+        <span class="step-no" style="align-self:flex-start">1</span>
+        <h3>Image model</h3>
+        <p>A Teachable Machine model trained on labelled photos of four house types. It runs in the browser with TensorFlow.js, so photos are never uploaded. Below 60% confidence, the app asks you to choose the type yourself.</p>
+      </div>
+      <div class="card">
+        <span class="step-no" style="align-self:flex-start">2</span>
+        <h3>Hazard data</h3>
+        <p>Each state has a level from 1 (low) to 4 (very high) for five hazards, taken from the BIS seismic zone map (IS 1893), the BMTPC Vulnerability Atlas, NDMA, IMD and GSI landslide maps.</p>
+      </div>
+      <div class="card">
+        <span class="step-no" style="align-self:flex-start">3</span>
+        <h3>Risk score</h3>
+        <p>House type and your answers set a vulnerability from 0 to 1 for each hazard. The score combines it with the hazard level:</p>
+        <div class="formula">Risk = 100 × H × (0.25 + 0.75 × V)</div>
+        <p class="muted" style="font-size:0.88rem">H for levels 1–4: 0.20, 0.45, 0.70, 0.95</p>
+      </div>
+    </div>
+    <div class="limits">
+      <h3>What it cannot do</h3>
+      <p>It cannot see inside walls, test materials or check foundations. The hazard data is per state, not per street. A photo of only one side of a house can mislead the model. Treat the score as a reason to act and to ask an engineer, never as proof that a house is safe.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><b style="color:var(--ink)">SurakshaGhar AI</b> · A school AI project on Architectural Design for Sustaining Natural Calamities in India · Team [your team name], Class [ ].</p>
+    <p>Sources: BIS IS 1893 and IS 4326, BMTPC Vulnerability Atlas of India, NDMA guidelines, IMD, Geological Survey of India. Figures are approximate.</p>
+  </div>
+</footer>
+
+<script>
+const HAZARDS = [
+  { id: "eq", name: "Earthquake" },
+  { id: "flood", name: "Flood" },
+  { id: "cyclone", name: "Cyclone" },
+  { id: "landslide", name: "Landslide" },
+  { id: "heat", name: "Extreme heat" }
+];
+const LEVEL_NAMES = ["", "Low", "Moderate", "High", "Very high"];
+const H_VALUE = [0, 0.2, 0.45, 0.7, 0.95];
+
+// State-level hazard levels, 1 (low) to 4 (very high). eqZone uses the BIS zone labels.
+const STATES = {
+  "Andaman & Nicobar": { eqZone: "V", eq: 4, flood: 2, cyclone: 3, landslide: 2, heat: 1 },
+  "Andhra Pradesh": { eqZone: "II–III", eq: 2, flood: 2, cyclone: 4, landslide: 1, heat: 4 },
+  "Arunachal Pradesh": { eqZone: "V", eq: 4, flood: 3, cyclone: 1, landslide: 3, heat: 1 },
+  "Assam": { eqZone: "V", eq: 4, flood: 4, cyclone: 1, landslide: 2, heat: 2 },
+  "Bihar": { eqZone: "III–V", eq: 4, flood: 4, cyclone: 1, landslide: 1, heat: 3 },
+  "Chhattisgarh": { eqZone: "II", eq: 1, flood: 1, cyclone: 1, landslide: 1, heat: 3 },
+  "Delhi": { eqZone: "IV", eq: 3, flood: 2, cyclone: 1, landslide: 1, heat: 4 },
+  "Goa": { eqZone: "III", eq: 2, flood: 2, cyclone: 2, landslide: 2, heat: 1 },
+  "Gujarat": { eqZone: "III–V", eq: 4, flood: 2, cyclone: 3, landslide: 1, heat: 3 },
+  "Haryana": { eqZone: "III–IV", eq: 3, flood: 2, cyclone: 1, landslide: 1, heat: 4 },
+  "Himachal Pradesh": { eqZone: "IV–V", eq: 4, flood: 3, cyclone: 1, landslide: 4, heat: 1 },
+  "Jammu & Kashmir": { eqZone: "IV–V", eq: 4, flood: 3, cyclone: 1, landslide: 3, heat: 1 },
+  "Jharkhand": { eqZone: "II–III", eq: 2, flood: 2, cyclone: 1, landslide: 1, heat: 3 },
+  "Karnataka": { eqZone: "II–III", eq: 2, flood: 2, cyclone: 2, landslide: 2, heat: 2 },
+  "Kerala": { eqZone: "III", eq: 2, flood: 3, cyclone: 2, landslide: 3, heat: 2 },
+  "Ladakh": { eqZone: "IV–V", eq: 4, flood: 2, cyclone: 1, landslide: 2, heat: 1 },
+  "Madhya Pradesh": { eqZone: "II–III", eq: 2, flood: 2, cyclone: 1, landslide: 1, heat: 4 },
+  "Maharashtra": { eqZone: "II–IV", eq: 3, flood: 2, cyclone: 2, landslide: 2, heat: 3 },
+  "Manipur": { eqZone: "V", eq: 4, flood: 3, cyclone: 1, landslide: 3, heat: 1 },
+  "Meghalaya": { eqZone: "V", eq: 4, flood: 2, cyclone: 1, landslide: 3, heat: 1 },
+  "Mizoram": { eqZone: "V", eq: 4, flood: 2, cyclone: 2, landslide: 4, heat: 1 },
+  "Nagaland": { eqZone: "V", eq: 4, flood: 2, cyclone: 1, landslide: 3, heat: 1 },
+  "Odisha": { eqZone: "II–III", eq: 2, flood: 3, cyclone: 4, landslide: 1, heat: 3 },
+  "Puducherry": { eqZone: "II–III", eq: 2, flood: 2, cyclone: 3, landslide: 1, heat: 2 },
+  "Punjab": { eqZone: "III–IV", eq: 3, flood: 3, cyclone: 1, landslide: 1, heat: 3 },
+  "Rajasthan": { eqZone: "II–III", eq: 2, flood: 1, cyclone: 1, landslide: 1, heat: 4 },
+  "Sikkim": { eqZone: "IV", eq: 3, flood: 2, cyclone: 1, landslide: 4, heat: 1 },
+  "Tamil Nadu": { eqZone: "II–III", eq: 2, flood: 2, cyclone: 3, landslide: 2, heat: 2 },
+  "Telangana": { eqZone: "II", eq: 1, flood: 2, cyclone: 1, landslide: 1, heat: 4 },
+  "Tripura": { eqZone: "V", eq: 4, flood: 3, cyclone: 2, landslide: 2, heat: 2 },
+  "Uttar Pradesh": { eqZone: "II–IV", eq: 3, flood: 3, cyclone: 1, landslide: 1, heat: 4 },
+  "Uttarakhand": { eqZone: "IV–V", eq: 4, flood: 3, cyclone: 1, landslide: 4, heat: 1 },
+  "West Bengal": { eqZone: "III–IV", eq: 3, flood: 4, cyclone: 4, landslide: 2, heat: 3 }
+};
+
+const TYPES = {
+  kutcha: { name: "Kutcha house", desc: "Mud, thatch, bamboo or unbaked brick walls", words: ["kutcha", "kachha", "mud", "thatch"] },
+  masonry: { name: "Brick or stone masonry", desc: "Load-bearing brick or stone walls, no concrete frame", words: ["masonry", "brick", "stone"] },
+  rcc: { name: "RCC frame (pucca)", desc: "Concrete columns and beams with brick infill", words: ["rcc", "concrete", "frame", "pucca"] },
+  stilt: { name: "Raised or stilt house", desc: "Living floor on posts, often bamboo or timber", words: ["stilt", "raised", "chang"] }
+};
+
+// Base vulnerability (0 = very safe, 1 = very weak) of each house type to each hazard.
+const BASE_V = {
+  kutcha: { eq: 0.8, flood: 0.9, cyclone: 0.9, landslide: 0.7, heat: 0.35 },
+  masonry: { eq: 0.85, flood: 0.6, cyclone: 0.5, landslide: 0.75, heat: 0.5 },
+  rcc: { eq: 0.4, flood: 0.4, cyclone: 0.25, landslide: 0.6, heat: 0.7 },
+  stilt: { eq: 0.3, flood: 0.2, cyclone: 0.6, landslide: 0.5, heat: 0.4 }
+};
+
+const QUESTIONS = [
+  { id: "roof", label: "What is the roof made of?", options: [["slab", "Concrete slab"], ["tin", "Tin or metal sheet"], ["tiles", "Clay tiles"], ["thatch", "Thatch or straw"]] },
+  { id: "floors", label: "How many floors?", options: [["1", "1"], ["2", "2"], ["3", "3 or more"]] },
+  { id: "plinth", label: "How high is the floor above the ground outside?", options: [["low", "Below the knee (under 45 cm)"], ["mid", "Knee to waist (45–90 cm)"], ["high", "Above the waist (over 90 cm)"], ["stilts", "On stilts"]] },
+  { id: "cracks", label: "Any cracks in the walls?", options: [["none", "None"], ["thin", "Thin, hairline"], ["wide", "Wide, a coin fits in"]] },
+  { id: "bands", label: "Does it have concrete bands or steel bars in the walls?", options: [["yes", "Yes"], ["no", "No"], ["unsure", "Don't know"]] }
+];
+
+// How each answer changes vulnerability.
+const MODS = {
+  roof: { slab: { cyclone: -0.15, heat: 0.15 }, tin: { cyclone: 0.25, heat: 0.2, eq: -0.05 }, tiles: { cyclone: 0.15, eq: 0.1 }, thatch: { cyclone: 0.3, heat: -0.1, flood: 0.05 } },
+  floors: { "1": {}, "2": { eq: 0.05 }, "3": { eq: 0.12, landslide: 0.1 } },
+  plinth: { low: { flood: 0.25 }, mid: {}, high: { flood: -0.2 }, stilts: { flood: -0.35 } },
+  cracks: { none: {}, thin: { eq: 0.05, landslide: 0.05 }, wide: { eq: 0.2, landslide: 0.15, flood: 0.05, cyclone: 0.05 } },
+  bands: { yes: { eq: -0.25, cyclone: -0.05 }, no: { eq: 0.1 }, unsure: {} }
+};
+
+const COST = { 1: "₹ low cost", 2: "₹₹ medium", 3: "₹₹₹ major work" };
+const FIXES = [
+  { hz: "eq", cost: 1, title: "Fix heavy things in place", text: "Bolt tall cupboards and water tanks to walls and keep gas cylinders and heavy items low, away from beds.", when: () => true },
+  { hz: "eq", cost: 2, title: "Add seismic bands", text: "Add concrete or timber bands at plinth, lintel and roof level so the walls move as one box (IS 4326). Old houses can be retrofitted with steel mesh and plaster belts.", when: s => (s.type === "masonry" || s.type === "kutcha") && s.bands !== "yes" },
+  { hz: "eq", cost: 2, title: "Strengthen the corners", text: "Add vertical steel bars at corners and wall junctions, set in concrete. Corners crack first in an earthquake.", when: s => s.type === "masonry" && s.bands !== "yes" },
+  { hz: "eq", cost: 1, title: "Tie down the roof", text: "Fix roof tiles and sheets and brace the rafters so the roof cannot slide off or drop in pieces.", when: s => s.roof === "tiles" || s.roof === "tin" },
+  { hz: "eq", cost: 1, title: "Get wide cracks checked", text: "Wide cracks mean the walls are already weak. Ask a civil engineer to inspect before the next monsoon.", when: s => s.cracks === "wide" },
+  { hz: "eq", cost: 3, title: "Build new rooms light and simple", text: "Use a simple, symmetric box plan, small openings away from corners, and light walls, like the Assam-type house.", when: s => s.type !== "rcc" },
+  { hz: "flood", cost: 1, title: "Keep valuables above flood level", text: "Store documents, grain, seeds and medicines on a high shelf or loft. Move switches and sockets up to about 1.2 m.", when: () => true },
+  { hz: "flood", cost: 2, title: "Raise the plinth", text: "Raise the floor at least 60 cm above the highest flood level people remember, or build a raised platform as a safe room.", when: s => s.plinth === "low" || s.plinth === "mid" },
+  { hz: "flood", cost: 2, title: "Use water-resistant materials low down", text: "Below the flood line use cement plaster, tiles or treated bamboo, and avoid mud mortar that washes away.", when: s => s.type !== "rcc" },
+  { hz: "flood", cost: 3, title: "Build on stilts", text: "For a new house, lift the living floor on posts like the Chang Ghar of Assam so water passes underneath.", when: s => s.type !== "stilt" && s.plinth !== "stilts" },
+  { hz: "cyclone", cost: 1, title: "Fasten the roof sheets", text: "Use J-hooks with washers on every sheet and tie rafters to the walls with steel straps.", when: s => s.roof === "tin" || s.roof === "thatch" || s.roof === "tiles" },
+  { hz: "cyclone", cost: 1, title: "Fit window shutters", text: "Wooden shutters stop flying debris from breaking glass and letting wind inside to lift the roof.", when: () => true },
+  { hz: "cyclone", cost: 2, title: "Change the roof shape", text: "A hip roof with four slopes at 30–40° and short overhangs (about 50 cm) resists wind far better than a flat sheet or gable roof.", when: s => s.roof !== "slab" },
+  { hz: "cyclone", cost: 3, title: "Know your cyclone shelter", text: "Find the nearest multipurpose cyclone shelter and plan the route. For new homes choose a compact square or round plan.", when: () => true },
+  { hz: "landslide", cost: 1, title: "Control water on the slope", text: "Keep drains clear and lead roof water away from the hillside. Water soaking the slope triggers most landslides.", when: () => true },
+  { hz: "landslide", cost: 1, title: "Watch for warning signs", text: "New cracks in walls or ground, tilting poles or trees and muddy springs mean move out and inform the authorities.", when: () => true },
+  { hz: "landslide", cost: 2, title: "Hold the soil", text: "Build retaining walls with weep holes and plant deep-rooted vetiver grass on the slope.", when: () => true },
+  { hz: "landslide", cost: 3, title: "Do not add floors on a steep slope", text: "Extra floors add weight. Light traditional styles like Kath-Kuni put far less load on the hill.", when: s => s.floors !== "1" },
+  { hz: "heat", cost: 1, title: "Paint a cool roof", text: "White lime or reflective paint on the roof can make rooms noticeably cooler. Ahmedabad's Heat Action Plan promotes cool roofs.", when: s => s.roof === "slab" || s.roof === "tin" },
+  { hz: "heat", cost: 1, title: "Shade the west side", text: "Add chajjas, bamboo chiks or plants on the west and south walls.", when: () => true },
+  { hz: "heat", cost: 2, title: "Let air flow through", text: "Make openings on opposite walls, add jaali screens or a small courtyard so hot air escapes.", when: () => true }
+];
+
+const DESIGNS = [
+  { name: "Bhunga", where: "Kutch, Gujarat", hz: ["eq"], text: "Round mud houses with conical roofs. The circular shape spreads shaking evenly, and many stood through the 2001 Bhuj earthquake." },
+  { name: "Assam-type house", where: "Assam and the North-East", hz: ["eq"], text: "A light timber or bamboo frame with ekra reed walls plastered with mud. It sways in a quake instead of collapsing." },
+  { name: "Chang Ghar", where: "Mising community, Assam", hz: ["flood"], text: "Bamboo homes raised on stilts above the usual flood level. Floodwater flows underneath while the family stays dry." },
+  { name: "Kath-Kuni", where: "Himachal Pradesh", hz: ["eq", "landslide"], text: "Walls of alternating timber beams and dry stone. The timber ties the wall together so it flexes in an earthquake." },
+  { name: "Cyclone shelters", where: "Coastal Odisha", hz: ["cyclone", "flood"], text: "Raised concrete buildings used as schools in normal times. With early warning they helped keep Cyclone Fani's toll low in 2019." },
+  { name: "Courtyards and jaalis", where: "Rajasthan and Gujarat", hz: ["heat"], text: "Thick walls, shaded courtyards and stone screens keep rooms cool without electricity." }
+];
+
+// The example the page opens with.
+const state = { place: "Assam", type: "masonry", roof: "tin", floors: "1", plinth: "low", cracks: "thin", bands: "no", showAll: false, example: true };
+
+const $ = id => document.getElementById(id);
+const hazName = id => HAZARDS.find(h => h.id === id).name;
+const levelOf = score => score >= 75 ? 4 : score >= 50 ? 3 : score >= 25 ? 2 : 1;
+const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+
+function vulnerability(s) {
+  const v = Object.assign({}, BASE_V[s.type]);
+  for (const q of QUESTIONS) {
+    const mod = MODS[q.id][s[q.id]] || {};
+    for (const k in mod) v[k] += mod[k];
+  }
+  for (const k in v) v[k] = clamp(v[k], 0.05, 1);
+  return v;
+}
+
+function risks(s) {
+  const zone = STATES[s.place], v = vulnerability(s);
+  return HAZARDS.map(h => ({
+    id: h.id, name: h.name, area: zone[h.id],
+    score: Math.round(100 * H_VALUE[zone[h.id]] * (0.25 + 0.75 * v[h.id]))
+  }));
+}
+
+function rankedFixes(s, list) {
+  const byId = Object.fromEntries(list.map(r => [r.id, r.score]));
+  const weight = { 1: 1, 2: 0.85, 3: 0.7 };
+  return FIXES
+    .filter(f => byId[f.hz] >= 25 && f.when(s))
+    .map(f => ({ ...f, priority: byId[f.hz] * weight[f.cost] }))
+    .sort((a, b) => b.priority - a.priority);
+}
+
+function buildInputs() {
+  const sel = $("state");
+  sel.innerHTML = Object.keys(STATES).map(n => `<option value="${n}">${n}</option>`).join("");
+  sel.value = state.place;
+  sel.addEventListener("change", () => update({ place: sel.value }));
+
+  $("types").innerHTML = Object.entries(TYPES).map(([id, t]) => `
+    <div class="type-card">
+      <input type="radio" name="type" id="type-${id}" value="${id}">
+      <label for="type-${id}"><b>${t.name}</b><span>${t.desc}</span><span class="ai-tag" id="aiTag-${id}"></span></label>
+    </div>`).join("");
+  document.querySelectorAll('input[name="type"]').forEach(r => r.addEventListener("change", () => update({ type: r.value })));
+
+  $("questions").innerHTML = QUESTIONS.map(q => `
+    <fieldset class="q">
+      <legend>${q.label}</legend>
+      <div class="seg">${q.options.map(([val, text]) => `
+        <span><input type="radio" name="q-${q.id}" id="q-${q.id}-${val}" value="${val}"><label for="q-${q.id}-${val}">${text}</label></span>`).join("")}
+      </div>
+    </fieldset>`).join("");
+  QUESTIONS.forEach(q => document.querySelectorAll(`input[name="q-${q.id}"]`).forEach(r =>
+    r.addEventListener("change", () => update({ [q.id]: r.value }))));
+
+  $("designCards").innerHTML = DESIGNS.map(d => `
+    <article class="card">
+      <h3>${d.name}</h3>
+      <span class="where">${d.where}</span>
+      <div class="chips">${d.hz.map(h => `<span class="tag">${hazName(h)}</span>`).join("")}</div>
+      <p>${d.text}</p>
+    </article>`).join("");
+
+  $("moreFixes").addEventListener("click", () => { state.showAll = !state.showAll; render(); });
+  $("copyReport").addEventListener("click", copyReport);
+}
+
+function update(patch) {
+  Object.assign(state, patch);
+  if (state.example) { state.example = false; $("exampleNote").hidden = true; }
+  render();
+}
+
+function render() {
+  const zone = STATES[state.place];
+  $("hazardChips").innerHTML = HAZARDS.map(h => {
+    const lv = zone[h.id];
+    const extra = h.id === "eq" ? ` · Zone ${zone.eqZone}` : "";
+    return `<span class="chip"><span class="dot lv-${lv}"></span>${h.name}: ${LEVEL_NAMES[lv]}${extra}</span>`;
+  }).join("");
+
+  $(`type-${state.type}`).checked = true;
+  QUESTIONS.forEach(q => { const el = $(`q-${q.id}-${state[q.id]}`); if (el) el.checked = true; });
+
+  const list = risks(state);
+  const sorted = [...list].sort((a, b) => b.score - a.score);
+  const top = sorted[0];
+  $("reportPlace").textContent = `${state.place} · ${TYPES[state.type].name}`;
+  $("headline").innerHTML = top.score >= 25
+    ? `Biggest risk: <b>${top.name.toLowerCase()}</b>, ${top.score} out of 100 (${LEVEL_NAMES[levelOf(top.score)].toLowerCase()}). Start with the fixes below.`
+    : `All risks are low for this house and area. Keep up maintenance and know your nearest shelter.`;
+
+  $("risks").innerHTML = sorted.map(r => {
+    const lv = levelOf(r.score);
+    return `<div class="risk">
+      <span class="risk-name">${r.name}<small>area: ${LEVEL_NAMES[r.area].toLowerCase()}</small></span>
+      <span class="risk-score">${r.score}/100<span class="pill lv-${lv}">${LEVEL_NAMES[lv]}</span></span>
+      <div class="meter" role="img" aria-label="${r.name} risk ${r.score} out of 100"><i class="lv-${lv}" style="width:${r.score}%"></i></div>
+    </div>`;
+  }).join("");
+
+  const fixes = rankedFixes(state, list);
+  const shown = state.showAll ? fixes : fixes.slice(0, 6);
+  $("fixes").innerHTML = shown.length ? shown.map(f => `
+    <li class="fix">
+      <div class="fix-top"><b>${f.title}</b><span class="tag">${hazName(f.hz)}</span><span class="tag cost">${COST[f.cost]}</span></div>
+      <p>${f.text}</p>
+    </li>`).join("") : `<li class="fix"><p>No urgent fixes. Check the house again after any disaster.</p></li>`;
+  $("moreFixes").hidden = fixes.length <= 6;
+  $("moreFixes").textContent = state.showAll ? "Show top 6 only" : `Show all ${fixes.length} fixes`;
+}
+
+function reportText() {
+  const list = risks(state).sort((a, b) => b.score - a.score);
+  const fixes = rankedFixes(state, list).slice(0, 6);
+  return [
+    `SurakshaGhar AI safety report`,
+    `Place: ${state.place} · House: ${TYPES[state.type].name}`,
+    ``,
+    ...list.map(r => `${r.name}: ${r.score}/100 (${LEVEL_NAMES[levelOf(r.score)]})`),
+    ``,
+    `What to do first:`,
+    ...fixes.map((f, i) => `${i + 1}. ${f.title} (${hazName(f.hz)}, ${COST[f.cost]}): ${f.text}`),
+    ``,
+    `First check only, not an engineer's certificate.`
+  ].join("\n");
+}
+
+async function copyReport() {
+  const text = reportText();
+  try {
+    await navigator.clipboard.writeText(text);
+    $("copyStatus").textContent = "Copied. Paste it into WhatsApp or a message.";
+  } catch (e) {
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("aria-label", "Report text");
+    ta.style.cssText = "width:100%;min-height:160px;font:inherit;font-size:0.85rem";
+    $("copyStatus").textContent = "Select the text below and copy it.";
+    $("copyStatus").after(ta); ta.select();
+  }
+}
+
+/* ---------- Teachable Machine image model ---------- */
+let model = null;
+const TF_URL = "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js";
+const TM_URL = "https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.5/dist/teachablemachine-image.min.js";
+
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) return resolve();
+    const s = document.createElement("script");
+    s.src = src; s.onload = resolve; s.onerror = () => reject(new Error("Could not load " + src));
+    document.head.appendChild(s);
+  });
+}
+async function ensureLibs() {
+  await loadScript(TF_URL);
+  await loadScript(TM_URL);
+}
+function setStatus(id, text, kind) {
+  const el = $(id); el.textContent = text; el.className = "status" + (kind ? " " + kind : "");
+}
+function modelReady(m) {
+  model = m;
+  const labels = m.getClassLabels();
+  setStatus("modelStatus", `Model loaded with ${labels.length} classes: ${labels.join(", ")}. Now upload a house photo.`, "ok");
+  $("photo").disabled = false;
+}
+
+$("modelFiles").addEventListener("change", async e => {
+  const files = [...e.target.files];
+  const find = re => files.find(f => re.test(f.name.toLowerCase()));
+  const json = find(/^model.*\.json$/), meta = find(/metadata.*\.json$/), weights = find(/\.bin$/);
+  if (!json || !meta || !weights) { setStatus("modelStatus", "Pick all three files together: model.json, metadata.json and weights.bin.", "err"); return; }
+  setStatus("modelStatus", "Loading the model…");
+  try { await ensureLibs(); modelReady(await tmImage.loadFromFiles(json, weights, meta)); }
+  catch (err) { setStatus("modelStatus", "The model could not load. Export it again from Teachable Machine as TensorFlow.js and pick the three files.", "err"); }
+});
+
+$("loadUrl").addEventListener("click", async () => {
+  let url = $("modelUrl").value.trim();
+  if (!url) { setStatus("modelStatus", "Paste the shareable link from Teachable Machine first.", "err"); return; }
+  if (!url.endsWith("/")) url += "/";
+  setStatus("modelStatus", "Loading the model…");
+  try { await ensureLibs(); modelReady(await tmImage.load(url + "model.json", url + "metadata.json")); }
+  catch (err) { setStatus("modelStatus", "Could not load from that link. Check the link, or download the model files and use the Model files tab.", "err"); }
+});
+
+[["tabFiles", "paneFiles"], ["tabLink", "paneLink"]].forEach(([tab, pane], i, all) => {
+  $(tab).addEventListener("click", () => all.forEach(([t, p]) => {
+    const on = t === tab; $(t).setAttribute("aria-selected", on); $(p).hidden = !on;
+  }));
+});
+
+function typeFromLabel(label) {
+  const l = label.toLowerCase();
+  return Object.keys(TYPES).find(id => TYPES[id].words.some(w => l.includes(w)));
+}
+
+$("photo").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file || !model) return;
+  const img = $("photoPreview");
+  img.onload = async () => {
+    $("photoRow").hidden = false;
+    const preds = (await model.predict(img)).sort((a, b) => b.probability - a.probability);
+    $("preds").innerHTML = preds.map(p => `
+      <span>${p.className}</span><span class="pct">${Math.round(p.probability * 100)}%</span>
+      <span class="bar"><i style="width:${(p.probability * 100).toFixed(1)}%"></i></span>`).join("");
+    document.querySelectorAll(".ai-tag").forEach(t => t.textContent = "");
+    const best = preds[0], type = typeFromLabel(best.className), pct = Math.round(best.probability * 100);
+    if (!type) {
+      setStatus("aiVerdict", `The model's top class "${best.className}" does not match a house type. Name your classes kutcha, masonry, rcc and stilt.`, "err");
+    } else if (best.probability >= 0.6) {
+      $(`aiTag-${type}`).textContent = `AI pick · ${pct}% sure`;
+      setStatus("aiVerdict", `AI thinks this is a ${TYPES[type].name.toLowerCase()} (${pct}% sure). Selected below; change it if it is wrong.`, "ok");
+      update({ type });
+    } else {
+      setStatus("aiVerdict", `Not sure enough (top guess ${pct}%). Please choose the house type yourself below, or try a clearer photo of the whole front.`, "err");
+    }
+  };
+  img.src = URL.createObjectURL(file);
+});
+
+buildInputs();
+render();
+</script>
+
+</body>
+</html>
